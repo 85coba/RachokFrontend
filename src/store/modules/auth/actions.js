@@ -1,7 +1,6 @@
 import { USER_LOGIN, SET_AUTHENTICATED_USER, USER_LOGOUT } from './mutationTypes';
 import { SET_LOADING } from '../../mutationTypes';
 import api from '@/api/Api';
-import { userMapper } from '@/services/Normalizer';
 
 export default {
     async signIn({ commit }, { email, password }) {
@@ -133,34 +132,6 @@ export default {
             commit(SET_LOADING, false, { root: true });
 
             return Promise.resolve();
-        } catch (error) {
-            commit(SET_LOADING, false, { root: true });
-
-            return Promise.reject(error);
-        }
-    },
-
-    async fetchUsersByLikeTweet({ commit }, id) {
-        commit(SET_LOADING, true, { root: true });
-        try {
-            const users = await api.get(`/tweets/${id}/likers`);
-
-            commit(SET_LOADING, false, { root: true });
-            return users.map(userMapper);
-        } catch (error) {
-            commit(SET_LOADING, false, { root: true });
-
-            return Promise.reject(error);
-        }
-    },
-
-    async fetchUsersByLikeComment({ commit }, id) {
-        commit(SET_LOADING, true, { root: true });
-        try {
-            const users = await api.get(`/comments/${id}/likers`);
-
-            commit(SET_LOADING, false, { root: true });
-            return users.map(userMapper);
         } catch (error) {
             commit(SET_LOADING, false, { root: true });
 

@@ -20,32 +20,46 @@
               <v-chip
                 v-bind="data.attrs"
                 close
-                @click:close="remove"
+                @click:close="remove(data.item)"
               >{{ data.item.name }}</v-chip>
             </template>
           </v-autocomplete>
         </v-card-text>
-        <v-btn outline color="primary" @click="show=false" dark>close</v-btn>
+        <v-card-actions>
+          <v-btn color="primary" dark>Show</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn text color="black" @click="show=false" dark>
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-layout>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import showStatusToast from '@/components/mixin/showStatusToast';
+
 export default {
   name: "SelectEquipmentModal",
 
+  mixins: [showStatusToast],
+
   props: ["visible"],
+  
+  mounted () {
+    this.fetchEquipments()
+        .then((response) => { 
+          this.listEquipments = [...response]; 
+        })
+        .catch((e) => { this.showErrorMessage(e.message); });
+  },
 
   data() {
     return {
-      equipments: ["Rachok"],
-      listEquipments: [
-          { name: "Rachok" },
-          { name: "Traktor" },
-          { name: "Exkavator" }
-      
-      ]
+      equipments: [],
+      listEquipments: []
     };
   },
 
@@ -61,10 +75,10 @@ export default {
   },
   
   methods: {
-    remove() {
-        console.log('Remove')
+    ...mapActions('order',['fetchEquipments']),
+
+    remove(item) {
       const index = this.equipments.indexOf(item.name);
-      console.log(index);
       if (index >= 0) this.equipments.splice(index, 1);
     }
   }
