@@ -70,7 +70,7 @@
               label="Номер телефону"
               placeholder=" "
               prefix="+38 "
-              mask="phone"
+              v-mask="mask"
               :rules="[rules.required]"
               outline
               ma-5
@@ -105,7 +105,8 @@
 <script>
 import VueGoogleAutocomplete from '../common/VueGoogleAutocomplete'
 import { mapActions } from 'vuex';
-import showStatusToast from '@/components/mixin/showStatusToast'
+import showStatusToast from '@/components/mixin/showStatusToast';
+import { mask } from 'vue-the-mask';
 
 export default {
   name: 'RequestForm',
@@ -116,7 +117,12 @@ export default {
     VueGoogleAutocomplete
   },
 
+  directives: {
+    mask
+  },
+
   data: () => ({
+    mask: '(###) ###-##-##',
     order: {
       title:'',
       info:'',
