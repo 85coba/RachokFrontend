@@ -10,9 +10,9 @@
           :items="items"
           item-text="name"
           :search-input.sync="search"
-          label="Введіть назву техніки, bobcat чи екскаватор"
+          label="Введіть назву техніки (bobcat чи екскаватор)"
           return-object
-          prepend-icon="search"
+          prepend-icon="mdi-magnify"
           hide-no-data
           hide-selected
       ></v-combobox>
@@ -92,11 +92,11 @@
       <v-spacer></v-spacer>
       <v-btn :disabled="isOk" color="green lighten-1" @click="onOk">
         OK
-        <v-icon right>check_circle</v-icon>
+        <v-icon right>mdi-check-circle</v-icon>
       </v-btn>
       <v-btn :disabled="!title" color="blue-grey lighten-1" @click="onClear">
         Clear
-        <v-icon right>replay</v-icon>
+        <v-icon right>mdi-close-circle</v-icon>
       </v-btn>
     </v-card-actions>
     </v-card>
