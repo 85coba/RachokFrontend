@@ -142,7 +142,7 @@ export default {
     async sendRequestResetPassword({ commit }, email) {
         commit(SET_LOADING, true, { root: true });
         try {
-            api.post("/auth/reset-password", { email: email })
+            await api.post("/auth/reset-password", { email: email });
 
             commit(SET_LOADING, false, { root: true });
             
@@ -157,10 +157,37 @@ export default {
         commit(SET_LOADING, true, { root: true });
         try {
 
-            api.post("/auth/reset/password/", payload)
+            await api.post("/auth/reset/password/", payload);
 
             commit(SET_LOADING, false, { root: true });
             
+        } catch (error) {
+            commit(SET_LOADING, false, { root: true });
+
+            return Promise.reject(error);
+        }
+    },
+
+    async addSettings( { commit }, settings ) {
+        commit(SET_LOADING, true, { root: true });
+        try {
+
+            await api.post('/user/settings', {settings: settings});
+
+            commit(SET_LOADING, false, {root: true});
+        } catch (error) {
+            commit(SET_LOADING, false, {root: true});
+
+            return Promise.reject(error);
+        }
+    },
+
+    async fetchSettings({ commit }) {
+        commit(SET_LOADING, true, { root: true });
+        try {
+            const settings = await api.get('/user/settings');
+            commit(SET_LOADING, false, { root: true });
+            return Promise.resolve(settings)
         } catch (error) {
             commit(SET_LOADING, false, { root: true });
 
