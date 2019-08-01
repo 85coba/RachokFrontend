@@ -4,5 +4,5 @@ export default {
     hasAuthenticatedUser: state => !!state.user.id,
     getAuthenticatedUser: state => state.user,
     getToken: state => state.token,
-    getFullName: state => `${state.user.firstName} ${state.user.lastName}`,
+    getFullName: state => `${state.user.firstName} ${state.user.lastName}`
 };

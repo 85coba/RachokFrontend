@@ -26,7 +26,8 @@
           </v-autocomplete>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" dark>Show</v-btn>
+          <v-btn color="success" dark @click="onSave">Save</v-btn>
+          <v-btn color="grey">Clear</v-btn>
           <v-spacer></v-spacer>
           <v-btn text color="black" @click="show=false" dark>
             <v-icon>mdi-close</v-icon>
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations, mapGetters } from 'vuex';
 import showStatusToast from '@/components/mixin/showStatusToast';
 
 export default {
@@ -48,22 +49,36 @@ export default {
 
   props: ["visible"],
   
-  mounted () {
+  async mounted () {
     this.fetchEquipments()
         .then((response) => { 
           this.listEquipments = [...response]; 
         })
         .catch((e) => { this.showErrorMessage(e.message); });
+
+    await this.fetchSettings()
+        .then((response) => {
+          this.filterResponse = [...response];
+      });
+
+      this.filterResponse = this.filterResponse.find((filters) => {
+        return Object.keys(filters) == 'title';
+      });
+
+      this.equipments = (this.filterResponse) ? (this.filterResponse.title) ? this.filterResponse.title : [] : [];
   },
 
   data() {
     return {
+      filterResponse: [],
       equipments: [],
       listEquipments: []
     };
   },
 
   computed: {
+    ...mapGetters('auth', ['getSettings']),
+
     show: {
       get() {
         return this.visible;
@@ -75,11 +90,18 @@ export default {
   },
   
   methods: {
-    ...mapActions('order',['fetchEquipments']),
+    ...mapActions('order',['fetchEquipments', 'fetchOrders']),
+    ...mapActions('auth', ['addSettings', 'fetchSettings']),
 
     remove(item) {
       const index = this.equipments.indexOf(item.name);
       if (index >= 0) this.equipments.splice(index, 1);
+    },
+
+    async onSave() {
+      await this.addSettings( { 'title': this.equipments } )
+      await this.fetchOrders({ page: 1 });
+      this.show = false;
     }
   }
 };

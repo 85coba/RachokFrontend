@@ -7,7 +7,6 @@ export const userMapper = user => ({
     nickname: user.nickname,
     firstName: user.first_name,
     lastName: user.last_name,
-    settings: user.settings,
 });
 
 export const emptyUser = () => ({

@@ -10,7 +10,7 @@
             <v-card-text>
                  <v-select
                     
-                    outline
+                    outlined
                     label="Select region"
                 ></v-select>
                 <VueGoogleAutocomplete
@@ -23,7 +23,7 @@
                 ></VueGoogleAutocomplete>
 
             </v-card-text>
-            <v-btn outline color="primary" @click="show=false" dark>close</v-btn>
+            <v-btn color="primary" @click="show=false" dark>close</v-btn>
         </v-card>
         
         </v-dialog>
