@@ -8,22 +8,23 @@
         <v-card>
             <v-card-title class="headline justify-center">Select region for overview</v-card-title>
             <v-card-text>
-                 <v-select
-                    
-                    outlined
-                    label="Select region"
-                ></v-select>
                 <VueGoogleAutocomplete
                     id="selectFilterCity"
-                    types="(cities)"
+                    types="(regions)"
                     classname="form-control"
                     placeholder="Start typing"
                     v-on:placechanged="getAdressData"
                     country="ua"
                 ></VueGoogleAutocomplete>
-
+                <v-switch v-model="isAllRegion" :label="`Show all region of this city`"></v-switch>
             </v-card-text>
-            <v-btn color="primary" @click="show=false" dark>close</v-btn>
+            <v-card-actions>
+                <v-btn color="success" @click="onSave">save</v-btn>
+                <v-btn color="info" @click="onClear">clean</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn text @click="show=false"><v-icon>mdi-close</v-icon></v-btn>
+            </v-card-actions>
+            
         </v-card>
         
         </v-dialog>
@@ -31,6 +32,7 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
     import VueGoogleAutocomplete from '../common/VueGoogleAutocomplete';
     export default {
         name: 'SelectRegionModal',
@@ -40,6 +42,13 @@
         },
 
         props: ['visible'],
+
+        data() {
+            return {
+                isAllRegion: false,
+                place: {}
+            }
+        },
 
         computed: {
             show: {
@@ -53,9 +62,35 @@
         },
 
         methods: {
-            getAdressData() {
+            ...mapActions('order',['fetchOrders']),
+            ...mapActions('auth', ['addSettings', 'fetchSettings']),
+            
+            getAdressData (addressData, placeResultData) {
+                this.place.region = addressData.administrative_area_level_1;
+                this.place.city = addressData.locality;
+            },
+
+            async onSave() {
+                let chose = {};
+
+                if (this.isAllRegion || (this.place.region && (this.place.city === undefined))) {
+                    if (this.place.region === undefined) { return this.onClear() };
+                    chose = { 'region': [this.place.region], 'city':[] };
+                } else {
+                    if (this.place.city === undefined) { return this.onClear() };
+                    chose = { 'city': [this.place.city], 'region':[] };
+                }
                 
-            }
+                await this.addSettings( chose )
+                await this.fetchOrders({ page: 1 });
+                this.show = false;
+            },
+
+            async onClear() {
+                await this.addSettings( {'city': [], 'region': []});
+                await this.fetchOrders({ page: 1 });
+                this.show = false;
+            },
         },
     }
 </script>
