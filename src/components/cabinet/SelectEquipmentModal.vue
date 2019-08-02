@@ -31,7 +31,7 @@
           <v-btn color="success" dark @click="onSave">Save</v-btn>
           <v-btn color="grey" dark @click="onClear">Clear</v-btn>
           <v-spacer></v-spacer>
-          <v-btn text color="black" @click="show=false" dark>
+          <v-btn text color="black" @click="show=false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-actions>
@@ -57,17 +57,6 @@ export default {
           this.listEquipments = [...response]; 
         })
         .catch((e) => { this.showErrorMessage(e.message); });
-
-    await this.fetchSettings()
-        .then((response) => {
-          this.filterResponse = [...response];
-      });
-
-      this.filterResponse = this.filterResponse.find((filters) => {
-        return Object.keys(filters) == 'title';
-      });
-
-      this.equipments = (this.filterResponse) ? (this.filterResponse.title) ? this.filterResponse.title : [] : [];
   },
 
   data() {
@@ -83,6 +72,7 @@ export default {
 
     show: {
       get() {
+        this.fillSettings();
         return this.visible;
       },
       set(value) {
@@ -108,6 +98,19 @@ export default {
 
     onClear() {
       this.equipments = [];
+    },
+
+    async fillSettings() {
+      await this.fetchSettings()
+        .then((response) => {
+          this.filterResponse = [...response];
+      });
+
+      this.filterResponse = this.filterResponse.find((filters) => {
+        return Object.keys(filters) == 'title';
+      });
+
+      this.equipments = (this.filterResponse) ? (this.filterResponse.title) ? this.filterResponse.title : [] : [];
     }
   }
 };
