@@ -1,4 +1,10 @@
-import { ORDERS_SET, ORDER_SET_PROCESSED, ORDER_SET_UNPROCESSED, ORDER_REMOVE } from './mutationTypes';
+import { 
+    ORDERS_SET, 
+    ORDER_SET_PROCESSED, 
+    ORDER_SET_UNPROCESSED, 
+    ORDER_REMOVE,
+    ORDERS_ADD 
+} from './mutationTypes';
 import api from '@/api/Api';
 import { SET_LOADING } from '../../mutationTypes';
 import { orderMapper, equipmentMapper } from '@/services/Normalizer';
@@ -21,10 +27,26 @@ export default {
         }
     },
 
+    async fetchOrdersPage({ commit }, { page }) {
+        commit(SET_LOADING, true, {root: true});
+
+        try {
+            const orders = await api.get('/order/all', { page });
+            commit(ORDERS_ADD, orders);
+            commit(SET_LOADING, false, {root: true});
+            
+            return Promise.resolve(orders.map(orderMapper));
+        } catch (error) {
+            commit(SET_LOADING, false, {root: true});
+            return Promise.reject(error);
+        }
+    },
+
     async addOrder({ commit }, order) {
         commit (SET_LOADING, true, {root: true});
         try {
-            await axios.post(`${process.env.VUE_APP_API_URL}/order/add`, 
+            await axios.post(
+                `${process.env.VUE_APP_API_URL}/order/add`, 
                 {
                     title: order.title,
                     info: order.info,
@@ -38,9 +60,7 @@ export default {
                 {
                     headers: { 'X-Socket-ID': getSocketId() }
                 }
-                );
-
-            
+            );
             commit(SET_LOADING, false, {root: true});
         } catch(error) {
             commit(SET_LOADING, false, {root: true});

@@ -1,10 +1,10 @@
 import { 
-    ORDER_ADD, 
+    ORDER_ADD,
+    ORDERS_ADD, 
     ORDERS_SET, 
     ORDER_SET_PROCESSED, 
     ORDER_SET_UNPROCESSED, 
     ORDER_REMOVE,
-    ORDERS_SET_BY_EQUIPMENTS,
 } from './mutationTypes';
 import { orderMapper } from '@/services/Normalizer';
 import Vue from 'vue';
@@ -14,6 +14,15 @@ export default {
         state.orders = {
             ...state.orders,
             [order.id]: orderMapper(order)
+        };
+    },
+
+    [ORDERS_ADD]: (state, orders) => {
+        state.orders = {
+            ...state.orders,
+            ...orders.reduce(
+                (prev, order) => ({ ...prev, [order.id]: orderMapper(order) }), {}
+            ),   
         };
     },
 
@@ -36,8 +45,4 @@ export default {
     [ORDER_REMOVE]: (state, id) => {
         Vue.delete (state.orders, id);
     },
-
-    // [ORDERS_SET_BY_EQUIPMENTS]: (state, equipments) => {
-
-    // }
 }

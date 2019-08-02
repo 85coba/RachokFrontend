@@ -23,26 +23,33 @@
           <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
         </template>
       </transition-group>
+      <infinite-loading @infinite="infiniteHandler">
+        <div slot="spinner">Loading...</div>
+      </infinite-loading>
     </v-list>
     <v-layout row justify-center>
-      <OrderInfo :visible="isShowInfo" :item="item" @close="isShowInfo = false"></OrderInfo>
+      <order-info :visible="isShowInfo" :item="item" @close="isShowInfo = false"></order-info>
     </v-layout>
   </v-container>
 </template>
  <script>
 import { mapGetters, mapActions } from "vuex";
-import OrderInfo from '@/components/cabinet/OrderInfo.vue';
+import OrderInfo from "@/components/cabinet/OrderInfo.vue";
 import showStatusToast from "@/components/mixin/showStatusToast";
+import InfiniteLoading from "vue-infinite-loading";
+
 export default {
-  name: "OrdrsTables",
+  name: "OrdrsTable",
 
   components: {
     OrderInfo,
+    InfiniteLoading
   },
 
   mixins: [showStatusToast],
 
   data: () => ({
+    page: 1,
     item: {},
     selected: [],
     isShowInfo: false
@@ -63,14 +70,28 @@ export default {
   },
 
   methods: {
-    ...mapActions("order", [
-      "fetchOrders",
-    ]),
+    ...mapActions("order", ["fetchOrders", "fetchOrdersPage"]),
 
     toggle(item) {
       this.item = item;
       this.isShowInfo = true;
     },
+
+    async infiniteHandler($state) {
+      try {
+        const orders = await this.fetchOrdersPage({ page: this.page + 1 });
+
+        if (orders.length) {
+          this.page++;
+          $state.loaded();    
+        } else {
+          $state.complete();
+        };
+      } catch (error) {
+          this.showErrorMessage(error);
+          $state.complete();
+      }
+    }
   }
 };
 </script>

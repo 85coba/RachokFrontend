@@ -29,7 +29,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn color="success" dark @click="onSave">Save</v-btn>
-          <v-btn color="grey" dark @click="onClear">Clear</v-btn>
+          <v-btn color="info" dark @click="onClear">Clear</v-btn>
           <v-spacer></v-spacer>
           <v-btn text color="black" @click="show=false">
             <v-icon>mdi-close</v-icon>
@@ -96,8 +96,11 @@ export default {
       this.show = false;
     },
 
-    onClear() {
+    async onClear() {
       this.equipments = [];
+      await this.addSettings( { 'title': this.equipments } )
+      await this.fetchOrders({ page: 1 });
+      this.show = false;
     },
 
     async fillSettings() {
