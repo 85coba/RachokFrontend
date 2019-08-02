@@ -2,9 +2,9 @@
   <div>
     <v-app-bar app clipped-left dark color="blue darken-3">
       <v-app-bar-nav-icon v-if="isLoggedIn" @click.native="drawer = ! drawer"></v-app-bar-nav-icon>
-      <span class="title ml-3 mr-5">
-        <router-link :to="{name: 'home'}" class="tool-bar-link"><span>Рачок</span></router-link>
-      </span>
+      <v-toolbar-title>
+        <router-link class="head-link" :to="{name: 'home'}"><span>Рачок</span></router-link>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         text
@@ -160,8 +160,8 @@
 </script>
 
 <style scope>
-    .tool-bar-link {   
-        color:rgb(247, 215, 73);
+    .head-link {   
+        color:rgb(247, 215, 73) !important;
         text-decoration: none;
-    }
+    } 
 </style>

@@ -18,6 +18,8 @@
           >
             <template v-slot:selection="data">
               <v-chip
+                color="accent"
+                dark
                 v-bind="data.attrs"
                 close
                 @click:close="remove(data.item)"
@@ -27,7 +29,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn color="success" dark @click="onSave">Save</v-btn>
-          <v-btn color="grey">Clear</v-btn>
+          <v-btn color="grey" dark @click="onClear">Clear</v-btn>
           <v-spacer></v-spacer>
           <v-btn text color="black" @click="show=false" dark>
             <v-icon>mdi-close</v-icon>
@@ -102,6 +104,10 @@ export default {
       await this.addSettings( { 'title': this.equipments } )
       await this.fetchOrders({ page: 1 });
       this.show = false;
+    },
+
+    onClear() {
+      this.equipments = [];
     }
   }
 };
