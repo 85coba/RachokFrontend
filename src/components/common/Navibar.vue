@@ -7,10 +7,11 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
+        v-if="!isLoggedIn"
         text
-        to ="/cabinet"
+        to ="/auth/sign-in"
       >
-        <span class="mr-2">Мій кабінет</span>
+        <span class="mr-2">Sing In</span>
       </v-btn>
       <v-btn
         v-if="isLoggedIn"
@@ -89,14 +90,12 @@
           items: [
             { icon: 'mdi-home', text: 'Home' },
             { divider: true },
-            { icon: 'mdi-check', text: 'Show processed orders',  },
-            { icon: 'mdi-plus', text: 'Show unprocessed orders' },
-            { icon: 'mdi-delete', text: 'Show removed orders' },
+            { icon: 'mdi-format-list-bulleted', text: 'Show all',  },
+            { icon: 'mdi-check', text: 'Show processed',  },
+            { icon: 'mdi-plus', text: 'Show unprocessed' },
+            { icon: 'mdi-delete', text: 'Show removed' },
             { icon: 'mdi-forklift', text: 'Select equipments' },
             { icon: 'mdi-map-marker', text: 'Select region'},
-            { divider: true },
-            { icon: 'mdi-sort-ascending', text: 'Sort order by date ascendig' },
-            { icon: 'mdi-sort-descending', text: 'Sort order by date descending' },
             { divider: true },
             { icon: 'mdi-settings', text: 'Settings' },
           ]
@@ -131,21 +130,24 @@
               }
               switch (i) {
                 case 0:
-                  this.fetchOrders({ page: 1 });
+                  this.$router.push({ name: 'cabinet' });
                   break;
                 case 2:
-                  this.fetchProcessedOrders({ page: 1 });
+                  this.fetchOrders({ page: 1 });
                   break;
                 case 3:
-                  this.fetchUnProcessedOrders( { page: 1 } );
+                  this.fetchProcessedOrders({ page: 1 });
                   break;
                 case 4:
-                  this.fetchRemovedOrders( { page: 1 } );
+                  this.fetchUnProcessedOrders( { page: 1 } );
                   break;
                 case 5:
-                  this.equipmentModal = true;
+                  this.fetchRemovedOrders( { page: 1 } );
                   break;
                 case 6:
+                  this.equipmentModal = true;
+                  break;
+                case 7:
                   this.regionModal = true;
                   break;
                 default:
@@ -154,8 +156,6 @@
               
             }
         }
-
-
     }
 </script>
 
