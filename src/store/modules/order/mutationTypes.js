@@ -5,3 +5,4 @@ export const ORDER_SET_PROCESSED = 'orderSetProcessed';
 export const ORDER_SET_UNPROCESSED = 'orderSetUnProces';
 export const ORDER_REMOVE = 'orderRemove';
 export const ORDERS_SET_BY_EQUIPMENTS = 'ordersSetByEquipments';
+export const ORDERS_ADD = 'ordersAdd';
