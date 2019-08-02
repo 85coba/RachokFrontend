@@ -30,10 +30,10 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="onRemove(item.id)">
           <v-icon color="red large">mdi-delete</v-icon>
         </v-btn>
+        <v-spacer></v-spacer>
         <v-btn
           v-if="!item.processed"
           color="green darken-1"
@@ -46,6 +46,7 @@
           text
           @click="doNotProcessed(item.id)"
         >Не оброблено</v-btn>
+        <v-spacer></v-spacer>
         <v-btn text @click="show = false">
           <v-icon color="grey">mdi-close</v-icon>
         </v-btn>

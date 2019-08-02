@@ -9,8 +9,8 @@
                 <v-icon>mdi-forklift</v-icon>
                 {{ item.title }}
               </v-list-item-title>
-              <v-list-item-subtitle class="text--primary">{{ item.email }}</v-list-item-subtitle>
-              <v-list-item-subtitle>{{ item.city }}</v-list-item-subtitle>
+              <v-list-item-subtitle class="text--primary">{{ item.city }}</v-list-item-subtitle>
+              <v-list-item-subtitle>{{ item.email }}</v-list-item-subtitle>
             </v-list-item-content>
 
             <v-list-item-action>
@@ -24,7 +24,6 @@
         </template>
       </transition-group>
     </v-list>
-
     <v-layout row justify-center>
       <OrderInfo :visible="isShowInfo" :item="item" @close="isShowInfo = false"></OrderInfo>
     </v-layout>
