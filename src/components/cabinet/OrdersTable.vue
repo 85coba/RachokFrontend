@@ -34,6 +34,7 @@
 </template>
  <script>
 import { mapGetters, mapActions } from "vuex";
+import { ORDER_ADD } from "@/store/modules/order/mutationTypes";
 import OrderInfo from "@/components/cabinet/OrderInfo.vue";
 import showStatusToast from "@/components/mixin/showStatusToast";
 import InfiniteLoading from "vue-infinite-loading";
@@ -63,12 +64,10 @@ export default {
       this.showErrorMessage(error.message);
     }
 
-    let channel = pusher.subscribe('order-channel');
-    channel.bind('.order.added', data => {
-      alert('added');
-      this.$store.commit(`order/${ORDER_ADD}`, data.order)
+    let channel = pusher.subscribe("private-orders");
+    channel.bind("order.added", data => {
+    this.$store.commit(`order/${ORDER_ADD}`, data.order)
     });
-
   },
 
   computed: {
@@ -91,13 +90,13 @@ export default {
 
         if (orders.length) {
           this.page++;
-          $state.loaded();    
+          $state.loaded();
         } else {
           $state.complete();
-        };
+        }
       } catch (error) {
-          this.showErrorMessage(error);
-          $state.complete();
+        this.showErrorMessage(error);
+        $state.complete();
       }
     }
   }
