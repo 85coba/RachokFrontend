@@ -37,6 +37,7 @@ import { mapGetters, mapActions } from "vuex";
 import OrderInfo from "@/components/cabinet/OrderInfo.vue";
 import showStatusToast from "@/components/mixin/showStatusToast";
 import InfiniteLoading from "vue-infinite-loading";
+import { pusher } from '@/services/Pusher';
 
 export default {
   name: "OrdrsTable",
@@ -61,6 +62,13 @@ export default {
     } catch (error) {
       this.showErrorMessage(error.message);
     }
+
+    let channel = pusher.subscribe('order-channel');
+    channel.bind('.order.added', data => {
+      alert('added');
+      this.$store.commit(`order/${ORDER_ADD}`, data.order)
+    });
+
   },
 
   computed: {
