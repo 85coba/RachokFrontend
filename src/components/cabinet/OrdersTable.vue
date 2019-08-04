@@ -53,13 +53,12 @@ export default {
   data: () => ({
     page: 1,
     item: {},
-    selected: [],
     isShowInfo: false
   }),
 
   async created() {
     try {
-      await this.fetchOrders({ page: 1 });
+      await this.fetchOrders({ page: this.page });
     } catch (error) {
       this.showErrorMessage(error.message);
     }
@@ -86,7 +85,7 @@ export default {
 
     async infiniteHandler($state) {
       try {
-        const orders = await this.fetchOrdersPage({ page: this.page + 1 });
+        const orders = await this.fetchOrdersPage({ page: this.page });
 
         if (orders.length) {
           this.page++;
