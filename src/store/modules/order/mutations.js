@@ -5,6 +5,7 @@ import {
     ORDER_SET_PROCESSED, 
     ORDER_SET_UNPROCESSED, 
     ORDER_REMOVE,
+    ORDERS_VIEW_TYPE
 } from './mutationTypes';
 import { orderMapper } from '@/services/Normalizer';
 import Vue from 'vue';
@@ -45,4 +46,8 @@ export default {
     [ORDER_REMOVE]: (state, id) => {
         Vue.delete (state.orders, id);
     },
+
+    [ORDERS_VIEW_TYPE]: (state, type) => {
+        state.typeView = type;
+    }
 }

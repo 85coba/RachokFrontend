@@ -133,7 +133,7 @@ export default {
 
         try {
             const orders = await api.get('/order/processed', { page });
-            commit(ORDERS_SET, orders);
+            commit(ORDERS_ADD, orders);
             commit(SET_LOADING, false, {root: true});
             
             return Promise.resolve(orders.map(orderMapper));
@@ -148,7 +148,7 @@ export default {
 
         try {
             const orders = await api.get('/order/unprocessed', { page });
-            commit(ORDERS_SET, orders);
+            commit(ORDERS_ADD, orders);
             commit(SET_LOADING, false, {root: true});
             
             return Promise.resolve(orders.map(orderMapper));
@@ -163,7 +163,7 @@ export default {
 
         try {
             const orders = await api.get('/order/removed', { page });
-            commit(ORDERS_SET, orders);
+            commit(ORDERS_ADD, orders);
             commit(SET_LOADING, false, {root: true});
             
             return Promise.resolve(orders.map(orderMapper));

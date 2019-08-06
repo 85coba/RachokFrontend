@@ -6,3 +6,4 @@ export const ORDER_SET_UNPROCESSED = 'orderSetUnProces';
 export const ORDER_REMOVE = 'orderRemove';
 export const ORDERS_SET_BY_EQUIPMENTS = 'ordersSetByEquipments';
 export const ORDERS_ADD = 'ordersAdd';
+export const ORDERS_VIEW_TYPE = 'ordersViewType';
