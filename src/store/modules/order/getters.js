@@ -7,4 +7,5 @@ export default {
             )
     ),
 
+    typeView: state => state.typeView,
 }

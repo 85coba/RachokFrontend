@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    {{ type }}
     <v-list two-line>
       <transition-group name="slide-prev" tag="span">
         <template v-for="(item, index) in items" name="fade">
@@ -23,7 +24,7 @@
           <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
         </template>
       </transition-group>
-      <infinite-loading @infinite="infiniteHandler">
+      <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler">
         <div slot="spinner">Loading...</div>
       </infinite-loading>
     </v-list>
@@ -32,7 +33,7 @@
     </v-layout>
   </v-container>
 </template>
- <script>
+<script>
 import { mapGetters, mapActions } from "vuex";
 import { ORDER_ADD } from "@/store/modules/order/mutationTypes";
 import OrderInfo from "@/components/cabinet/OrderInfo.vue";
@@ -53,7 +54,8 @@ export default {
   data: () => ({
     page: 1,
     item: {},
-    isShowInfo: false
+    isShowInfo: false,
+    infiniteId: 1,
   }),
 
   async created() {
@@ -69,14 +71,31 @@ export default {
     });
   },
 
+  watch: {
+    type(newValue, oldValue) {
+      this.page = 1;
+      this.item = {};
+      this.infiniteId += 1;
+    }
+  },
+
   computed: {
     ...mapGetters("order", {
       items: "ordersSortedByCreatedDate"
-    })
+    }),
+    ...mapGetters("order", {
+      type: "typeView"
+    }),
   },
 
   methods: {
-    ...mapActions("order", ["fetchOrders", "fetchOrdersPage"]),
+    ...mapActions("order", [
+      "fetchOrders", 
+      "fetchOrdersPage",
+      "fetchProcessedOrders",
+      "fetchUnProcessedOrders",
+      "fetchRemovedOrders"
+    ]),
 
     toggle(item) {
       this.item = item;
@@ -85,7 +104,21 @@ export default {
 
     async infiniteHandler($state) {
       try {
-        const orders = await this.fetchOrdersPage({ page: this.page });
+        let orders = {};
+        switch (this.type) {
+        case "All":
+          orders = await this.fetchOrdersPage({ page: this.page });
+          break;
+        case "Processed":
+          orders = await this.fetchProcessedOrders({ page: this.page }); 
+          break;
+        case "UnProcessed":
+          orders = await this.fetchUnProcessedOrders({ page: this.page });
+          break;
+        case "Removed":
+          orders = await this.fetchRemovedOrders({ page: this.page });
+          break;
+      }
 
         if (orders.length) {
           this.page++;
@@ -97,6 +130,7 @@ export default {
         this.showErrorMessage(error);
         $state.complete();
       }
+
     }
   }
 };

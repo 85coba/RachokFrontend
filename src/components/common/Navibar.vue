@@ -74,6 +74,7 @@
 </template>
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex';
+    import { ORDERS_VIEW_TYPE, ORDERS_SET } from "@/store/modules/order/mutationTypes";
     import SelectEquipmentModal from '../cabinet/SelectEquipmentModal';
     import SelectRegionModal from '../cabinet/SelectRegionModal';
     export default {
@@ -133,15 +134,23 @@
                   this.$router.push({ name: 'cabinet' });
                   break;
                 case 2:
+                  this.$store.commit(`order/${ORDERS_SET}`,[]);
+                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'All');
                   this.fetchOrders({ page: 1 });
                   break;
                 case 3:
+                  this.$store.commit(`order/${ORDERS_SET}`,[]);
+                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'Processed');
                   this.fetchProcessedOrders({ page: 1 });
                   break;
                 case 4:
+                  this.$store.commit(`order/${ORDERS_SET}`,[]);
+                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'UnProcessed');
                   this.fetchUnProcessedOrders( { page: 1 } );
                   break;
                 case 5:
+                  this.$store.commit(`order/${ORDERS_SET}`,[]);
+                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'Removed');
                   this.fetchRemovedOrders( { page: 1 } );
                   break;
                 case 6:
