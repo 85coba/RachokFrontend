@@ -104,6 +104,9 @@
 
         computed: {
             ...mapGetters('auth', ['isLoggedIn']),
+            ...mapGetters( 'order', {
+              type: 'typeView'
+            } )
         },
 
         methods: {
@@ -134,24 +137,32 @@
                   this.$router.push({ name: 'cabinet' });
                   break;
                 case 2:
-                  this.$store.commit(`order/${ORDERS_SET}`,[]);
-                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'All');
-                  this.fetchOrders({ page: 1 });
+                  if (this.type !== 'All') {
+                    this.$store.commit(`order/${ORDERS_SET}`,[]);
+                    this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'All');
+                    this.fetchOrders({ page: 1 });
+                  }
                   break;
                 case 3:
-                  this.$store.commit(`order/${ORDERS_SET}`,[]);
-                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'Processed');
-                  this.fetchProcessedOrders({ page: 1 });
+                  if (this.type !== 'Processed') {
+                    this.$store.commit(`order/${ORDERS_SET}`,[]);
+                    this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'Processed');
+                    this.fetchProcessedOrders({ page: 1 });
+                  }
                   break;
                 case 4:
-                  this.$store.commit(`order/${ORDERS_SET}`,[]);
-                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'UnProcessed');
-                  this.fetchUnProcessedOrders( { page: 1 } );
+                  if (this.type !== 'UnProcessed') {
+                    this.$store.commit(`order/${ORDERS_SET}`,[]);
+                    this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'UnProcessed');
+                    this.fetchUnProcessedOrders( { page: 1 } );
+                  }
                   break;
                 case 5:
-                  this.$store.commit(`order/${ORDERS_SET}`,[]);
-                  this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'Removed');
-                  this.fetchRemovedOrders( { page: 1 } );
+                  if (this.type !== 'Removed') {
+                    this.$store.commit(`order/${ORDERS_SET}`,[]);
+                    this.$store.commit(`order/${ORDERS_VIEW_TYPE}`, 'Removed');
+                    this.fetchRemovedOrders( { page: 1 } );
+                  }
                   break;
                 case 6:
                   this.equipmentModal = true;
