@@ -90,7 +90,7 @@ export default {
         commit(SET_LOADING, true, {root: true});
 
         try {
-            await api.post(`${process.env.VUE_APP_API_URL}/process`,{ id: id });
+            await api.post(`order/process`,{ id: id });
 
             commit(ORDER_SET_PROCESSED, id);
             commit(SET_LOADING, false, {root: true});
@@ -104,7 +104,7 @@ export default {
         commit(SET_LOADING, true, {root: true});
 
         try {
-            await api.post(`${process.env.VUE_APP_API_URL}/unprocess`,{ id: id });
+            await api.post(`order/unprocess`,{ id: id });
 
             commit(ORDER_SET_UNPROCESSED, id);
             commit(SET_LOADING, false, {root: true});
@@ -118,7 +118,7 @@ export default {
         commit(SET_LOADING, true, {root: true});
 
         try {
-            await api.delete(`${process.env.VUE_APP_API_URL}/remove/${id}`);
+            await api.delete(`order/remove/${id}`);
 
             commit(ORDER_REMOVE, id);
             commit(SET_LOADING, false, {root: true});
