@@ -92,20 +92,16 @@ export default {
         }
     },
 
-    async updateProfile({ commit }, {
-        email,
-        firstName,
-        lastName,
-        nickname
-    }) {
+    async updateProfile({ commit }, user
+    ) {
         commit(SET_LOADING, true, { root: true });
 
         try {
             const data = await api.put('/auth/me', {
-                email,
-                first_name: firstName,
-                last_name: lastName,
-                nickname
+                email: user.email,
+                first_name: user.firstName,
+                last_name: user.lastName,
+                nickname: user.nickname
             });
 
             commit(SET_AUTHENTICATED_USER, data);

@@ -70,24 +70,29 @@
     </v-navigation-drawer>
     <SelectEquipmentModal :visible="equipmentModal" @close="equipmentModal = false"></SelectEquipmentModal>
     <SelectRegionModal :visible="regionModal" @close="regionModal = false" ></SelectRegionModal>
+    <UserSettingsModal :visible="settingsModal" @close="settingsModal = false" ></UserSettingsModal>
   </div>  
 </template>
+
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex';
     import { ORDERS_VIEW_TYPE, ORDERS_SET } from "@/store/modules/order/mutationTypes";
     import SelectEquipmentModal from '../cabinet/SelectEquipmentModal';
     import SelectRegionModal from '../cabinet/SelectRegionModal';
+    import UserSettingsModal from '../cabinet/UserSettingsModal';
     export default {
         name: 'Navibar',
         components: {
           SelectRegionModal,
-          SelectEquipmentModal
+          SelectEquipmentModal,
+          UserSettingsModal
         },
 
         data: () => ({
           drawer: true,
           regionModal: false,
           equipmentModal: false,
+          settingsModal: false,
           items: [
             { icon: 'mdi-home', text: 'Home' },
             { divider: true },
@@ -169,6 +174,9 @@
                   break;
                 case 7:
                   this.regionModal = true;
+                  break;
+                case 9:
+                  this.settingsModal = true;
                   break;
                 default:
                   break;
