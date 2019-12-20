@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app clipped-left dark color="blue darken-3">
+    <v-toolbar clipped-left class="white">
       <v-app-bar-nav-icon v-if="isLoggedIn" @click.native="drawer = ! drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <router-link class="head-link" :to="{name: 'home'}"><span>Рачок</span></router-link>
@@ -20,7 +20,7 @@
       >
         <span class="mr-2">Вихід</span>
       </v-btn>
-    </v-app-bar>
+    </v-toolbar>
     <v-navigation-drawer
       v-if="isLoggedIn"
       fixed
@@ -68,9 +68,9 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    <SelectEquipmentModal :visible="equipmentModal" @close="equipmentModal = false"></SelectEquipmentModal>
+    <SelectEquipmentModal v-if="isLoggedIn" :visible="equipmentModal" @close="equipmentModal = false"></SelectEquipmentModal>
     <SelectRegionModal :visible="regionModal" @close="regionModal = false" ></SelectRegionModal>
-    <UserSettingsModal :visible="settingsModal" @close="settingsModal = false" ></UserSettingsModal>
+    <UserSettingsModal v-if="isLoggedIn" :visible="settingsModal" @close="settingsModal = false" ></UserSettingsModal>
   </div>  
 </template>
 
@@ -181,7 +181,6 @@
                 default:
                   break;
               }
-              
             }
         }
     }

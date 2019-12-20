@@ -1,15 +1,12 @@
 <template>
-  <v-container fluid>
-    <v-layout row>
-      <v-flex grow>
-          <RequestForm/>
-      </v-flex>
-      <v-flex xs3 hidden-xs-only>
-        <v-card-text>
-          Some help variant.
-        </v-card-text>
-      </v-flex>
-    </v-layout>
+  <v-container pa-0 fluid>
+    <v-parallax
+      height="800"
+      src="../assets/background.jpg"
+      jumbotron
+    >
+      <!-- <RequestForm/> -->
+    </v-parallax>
   </v-container>
 </template>
 
@@ -29,3 +26,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.v-parallax__image {
+  transform: none !important;
+  width: 100% !important;
+}
+</style>

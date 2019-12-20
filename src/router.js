@@ -4,6 +4,7 @@ import Storage from '@/services/Storage';
 
 // async components
 const Home = () => import(/* webpackChunkName: "feed" */ './views/Home.vue');
+const HomeLending = () => import('./views/HomeLending.vue');
 const Cabinet = () => import('./views/Cabinet.vue');
 
 // auth pages using same chunk name
@@ -26,7 +27,7 @@ const router = new Router({
         {
             path: '/home',
             name: 'home',
-            component: Home,
+            component: HomeLending,
             meta: { requiresAuth: false },
         },
         {

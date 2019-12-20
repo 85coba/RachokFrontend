@@ -1,16 +1,28 @@
 <template>
-  <v-app>
+  <v-app light>
     <div>
-      <Navibar></Navibar>
-      <div
-        id="scrolling-techniques"
-        class="scroll-y"
-      >
+      <v-toolbar class="white" flat>
+        <v-app-bar-nav-icon to='/home'><img src="./assets/logo.jpg" alt="Vuetify.js" height="60px"></v-app-bar-nav-icon>
+        <v-toolbar-title class="mx-0"></v-toolbar-title>
+        <p>Beta</p>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn text>Open jobs</v-btn>
+          <v-btn 
+            text 
+            class="lighten-3"
+            v-if="!isLoggedIn"
+            to ="/auth/sign-in"
+          >
+            Sign In
+          </v-btn>
+        </v-toolbar-items>
+    </v-toolbar>
+
       <v-content>
         <router-view/>  
       </v-content>
       
-      </div>
     <Loading></Loading>
     </div>
   </v-app>
