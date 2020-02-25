@@ -3,14 +3,15 @@ import Router from 'vue-router';
 import Storage from '@/services/Storage';
 
 // async components
-const Home = () => import(/* webpackChunkName: "feed" */ './views/Home.vue');
-const HomeLending = () => import('./views/HomeLending.vue');
-const Cabinet = () => import('./views/Cabinet.vue');
+const HomeLending   = () => import('./views/HomeLending.vue');
+const Cabinet       = () => import('./views/Cabinet.vue');
+const FourOhFour    = () => import('./views/404.vue');
+
 
 // auth pages using same chunk name
-const SignIn = () => import(/* webpackChunkName: "auth" */ './views/SignIn.vue');
-const SignUp = () => import(/* webpackChunkName: "auth" */ './views/SignUp.vue');
-const ForgotPassword = () => import('./views/ForgotPassword.vue');
+const SignIn            = () => import(/* webpackChunkName: "auth" */ './views/SignIn.vue');
+const SignUp            = () => import(/* webpackChunkName: "auth" */ './views/SignUp.vue');
+const ForgotPassword    = () => import('./views/ForgotPassword.vue');
 const ResetPasswordForm = () => import('./views/ResetPasswordForm.vue');
 
 Vue.use(Router);
@@ -34,19 +35,25 @@ const router = new Router({
             path: '/cabinet',
             name: 'cabinet',
             component: Cabinet,
-            meta: { requiresAuth: true },
+            meta: { 
+                requiresAuth: true 
+            },
         },
         {
             path: '/auth/sign-in',
             name: 'auth.signIn',
             component: SignIn,
-            meta: { handleAuth: true },
+            meta: { 
+                handleAuth: true 
+            },
         },
         {
             path: '/auth/sign-up',
             name: 'auth.signUp',
             component: SignUp,
-            meta: { handleAuth: true },
+            meta: { 
+                handleAuth: true 
+            },
         },
         { 
             path: '/reset-password', 
@@ -63,6 +70,14 @@ const router = new Router({
             meta: { 
                 handleAuth:false 
             } 
+          },
+          {
+              path: '*',
+              name: '404',
+              component: FourOhFour,
+              meta: {
+                handleAuth:false
+              }
           }
     ],
     scrollBehavior: () => ({ x: 0, y: 0 }),

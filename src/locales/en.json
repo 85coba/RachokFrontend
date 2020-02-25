@@ -1,3 +1,17 @@
 {
-  "message": "hello i18n !!"
+  "message": "hello i18n !!",
+
+  "home": {
+    "btn": {
+      "sing_up": "Sing Up",
+      "sign_out": "Sing Out",
+      "cabinet": "Cabinet",
+      "find": "Find"
+    },
+
+    "intro": {
+      "header_1": "Rachok provide service fast searching special equipments.",
+      "header_2": "You will receive suggestions directly from owners, and able choose who will feet to you needs."
+    }
+  }
 }
