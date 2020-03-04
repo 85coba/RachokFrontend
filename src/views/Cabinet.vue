@@ -7,15 +7,13 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapGetters} from 'vuex';
 import OrdersTable from '../components/cabinet/OrdersTable';
-import Navibar from '../components/common/Navibar';
 
 export default {
   name: 'Cabinet',
   components: {
-    OrdersTable,
-    Navibar
+    OrdersTable
   },
 
   computed: {

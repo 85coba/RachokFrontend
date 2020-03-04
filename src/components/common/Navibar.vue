@@ -7,7 +7,9 @@
       <v-toolbar-title>Rachok</v-toolbar-title>
       <v-app-bar-nav-icon v-if="$route.name === 'cabinet'" @click.native="drawer = ! drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
+
+
+      <language-switcher></language-switcher>
         <v-btn text class="lighten-3" v-if="!isLoggedIn" to="/auth/sign-in">
           <span class="mr-2">{{ $t('home.btn.sing_up')}}</span>
         </v-btn>
@@ -17,9 +19,9 @@
         <v-btn v-if="isLoggedIn && ($route.name !== 'cabinet')" text :to="{name: 'cabinet'}">
           <span class="mr-2">{{ $t('home.btn.cabinet')}}</span>
         </v-btn>
-      </v-toolbar-items>
+    
     </v-app-bar>
-    <v-navigation-drawer v-if="isLoggedIn && ($route.name==='cabinet')"  v-model="drawer" clipped app>
+    <v-navigation-drawer v-if="isLoggedIn && ($route.name === 'cabinet')"  v-model="drawer" clipped app>
       <v-list>
         <template v-for="(item, i) in items">
           <v-layout row v-if="item.heading" align-center :key="i">
@@ -58,12 +60,14 @@ import {
 import SelectEquipmentModal from "../cabinet/SelectEquipmentModal";
 import SelectRegionModal from "../cabinet/SelectRegionModal";
 import UserSettingsModal from "../cabinet/UserSettingsModal";
+import LanguageSwitcher from '../common/LanguageSwitcher';
 export default {
   name: "Navibar",
   components: {
     SelectRegionModal,
     SelectEquipmentModal,
-    UserSettingsModal
+    UserSettingsModal,
+    LanguageSwitcher
   },
 
   data: () => ({
