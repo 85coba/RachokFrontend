@@ -1,8 +1,6 @@
 <template>
     <v-container fluid>
-    <v-layout row>
       <OrdersTable v-if="isLoggedIn"></OrdersTable>
-    </v-layout>
   </v-container>
 </template>
 

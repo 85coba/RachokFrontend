@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <div fluid>
     <section>
       <v-parallax src="../assets/background2.jpg" height="500">
         <v-layout column align-center justify-center class="white--text">
@@ -34,8 +34,16 @@
         </v-layout>
       </v-container>
     </section>
-
-    <RequestForm></RequestForm>
+    
+    <section>
+      <v-row>
+        <v-col cols="8">
+          <RequestForm></RequestForm>
+        </v-col>
+        <v-col>
+        </v-col>
+      </v-row>  
+    </section>
 
     <section>
       <v-parallax src="../assets/background.jpg" height="380">
@@ -96,7 +104,7 @@
         </v-flex>
       </v-layout>
     </v-footer>
-  </v-container>
+  </div>
 </template>
 
 <script>

@@ -7,19 +7,16 @@
       <v-toolbar-title>Rachok</v-toolbar-title>
       <v-app-bar-nav-icon v-if="$route.name === 'cabinet'" @click.native="drawer = ! drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-
-
       <language-switcher></language-switcher>
         <v-btn text class="lighten-3" v-if="!isLoggedIn" to="/auth/sign-in">
           <span class="mr-2">{{ $t('home.btn.sing_up')}}</span>
         </v-btn>
-        <v-btn v-if="isLoggedIn" text @click="onSignOut()">
-          <span class="mr-2">{{ $t('home.btn.sign_out')}}</span>
-        </v-btn>
         <v-btn v-if="isLoggedIn && ($route.name !== 'cabinet')" text :to="{name: 'cabinet'}">
           <span class="mr-2">{{ $t('home.btn.cabinet')}}</span>
         </v-btn>
-    
+          <v-btn v-if="isLoggedIn" text @click="onSignOut()">
+            <span class="mr-2">{{ $t('home.btn.sign_out')}}</span>
+        </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-if="isLoggedIn && ($route.name === 'cabinet')"  v-model="drawer" clipped app>
       <v-list>

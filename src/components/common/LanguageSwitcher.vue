@@ -9,12 +9,6 @@
 <script>
 export default {
    name: 'language-switcher',
-
-   data() {
-      return {
-          langs: ['ua', 'en', 'ru'],
-      }
-   },
 }
 </script>
 

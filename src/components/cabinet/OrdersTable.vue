@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     {{ type }}
     <v-list two-line>
       <transition-group name="slide-prev" tag="span">
@@ -31,7 +31,7 @@
     <v-layout row justify-center>
       <order-info :visible="isShowInfo" :item="item" @close="isShowInfo = false"></order-info>
     </v-layout>
-  </v-container>
+  </div>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";

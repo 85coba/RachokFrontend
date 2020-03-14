@@ -15,6 +15,7 @@
             item-text="name"
             item-value="name"
             multiple
+            :menu-props="{'closeOnContentClick': true}"
           >
             <template v-slot:selection="data">
               <v-chip
@@ -72,13 +73,18 @@ export default {
 
     show: {
       get() {
-        this.fillSettings();
         return this.visible;
       },
-      set(value) {
+      set() {
         this.$emit("close");
       }
-    }
+    },
+  },
+
+  watch: {
+    show: function() {
+      if(this.show) { this.fillSettings() }
+    },
   },
   
   methods: {

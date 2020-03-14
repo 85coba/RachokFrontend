@@ -3,7 +3,10 @@
 
     "home": {
         "btn": {
-            "sing_up": "Вхід"
+            "sing_up": "Вхід",
+            "sign_out": "Вихід",
+            "cabinet": "Кабінет",
+            "find": "Шукати"
         },
 
         "intro": {
