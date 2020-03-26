@@ -113,12 +113,24 @@ export default {
       });
 
       this.filterResponse = this.filterResponse.find(filters => {
-        return Object.keys(filters) == "city";
+        return (
+          Object.keys(filters) == "city" || Object.keys(filters) == "region"
+        );
       });
 
-    if (this.filterResponse){ 
-           this.$refs.googlePlace.update(this.filterResponse.city[0])
+      if (this.filterResponse) {
+
+        if ("region" in this.filterResponse) {
+
+          this.isAllRegion = true;
+
+          this.$refs.googlePlace.update(this.filterResponse.region[0]);
+
+        } else {
+
+          this.$refs.googlePlace.update(this.filterResponse.city[0]);
         }
+      }
     }
   }
 };

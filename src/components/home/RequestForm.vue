@@ -48,6 +48,7 @@
           </v-flex>
 
           <v-btn color="primary" @click="step = 3">Next</v-btn>
+          <v-btn color="worrning" @click="onClear">Reset</v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="3">
@@ -93,17 +94,16 @@
                   country="ua"
                 ></vue-google-autocomplete>
               </v-flex>
+              <v-btn :disabled="isOk" color="green lighten-1" @click="onOk">
+                OK
+                <v-icon right>mdi-check-circle</v-icon>
+              </v-btn>
+              <v-btn :disabled="!title" color="blue-grey lighten-1" @click="onClear">
+                Reset
+                <v-icon right>mdi-close-circle</v-icon>
+              </v-btn>
             </v-card-text>
           </v-card>
-
-          <v-btn :disabled="isOk" color="green lighten-1" @click="onOk">
-            OK
-            <v-icon right>mdi-check-circle</v-icon>
-          </v-btn>
-          <v-btn :disabled="!title" color="blue-grey lighten-1" @click="onClear">
-            Clear
-            <v-icon right>mdi-close-circle</v-icon>
-          </v-btn>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -133,12 +133,14 @@ export default {
     order: {
       title: "",
       info: "",
-      features: {},
+      features: {
+        ExtraInfo: "",
+      },
       pib: "",
       region: "",
       city: "",
       email: "",
-      phoneNumber: ""
+      phoneNumber: "",
     },
 
     step: 1,
@@ -159,8 +161,7 @@ export default {
 
   computed: {
     fields() {
-
-      if (! this.title) return [];
+      if (!this.title) return [];
       if (typeof this.title === "string") return [];
       if (!this.title.options) return [];
 
@@ -189,24 +190,33 @@ export default {
   },
   methods: {
     async onOk() {
-      if (this.next === false) {
-        this.next = true;
-      } else {
         this.order.title = this.title.name ? this.title.name : this.title;
         this.order.features = JSON.stringify(this.order.features);
         try {
           await this.addOrder(this.order);
           this.showSuccessMessage("Ваш запит додано!");
-          this.onClear();
         } catch (error) {
           this.showErrorMessage(error.message);
         }
-      }
+
+        this.onClear();
     },
 
     onClear() {
       this.title = null;
-      this.next = false;
+      this.order = {
+      title: "",
+      info: "",
+      features: {
+        ExtraInfo: "",
+      },
+      pib: "",
+      region: "",
+      city: "",
+      email: "",
+      phoneNumber: "",
+    };
+      this.step = 1;
     },
 
     getAddressData: function(addressData, placeResultData, id) {

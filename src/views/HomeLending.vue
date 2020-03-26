@@ -25,8 +25,7 @@
         <v-layout row wrap>
           <v-flex xs12 text-xs-center class="mt-5">
             <div class="headline">Are you amazed? Stay tuned!</div>
-            <br />
-            <div>We are lunching the beta in a few time. If you want to be one of the first Endorfine users we will email you as soon as we're ready. In the beginning only few people will test before the launch. Let us know how Endorfine will help you!</div>
+            <RequestForm></RequestForm>
           </v-flex>
           <v-flex xs8 offset-xs2>
             <v-card class="elevation-0 transparent"></v-card>
@@ -34,17 +33,7 @@
         </v-layout>
       </v-container>
     </section>
-    
-    <section>
-      <v-row>
-        <v-col cols="8">
-          <RequestForm></RequestForm>
-        </v-col>
-        <v-col>
-        </v-col>
-      </v-row>  
-    </section>
-
+  
     <section>
       <v-parallax src="../assets/background.jpg" height="380">
         <v-layout column align-center justify-center>
