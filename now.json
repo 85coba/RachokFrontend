@@ -1,19 +1,19 @@
 {
-    "name": "rachok",
-    "version": 2,
-    "build": {
-      "env": {
-        "VUE_APP_API_URL": "https://rachok.herokuapp.com/api/v1",
-        "VUE_APP_PUSHER_APP_KEY": "a77cba48e1dc963af103",
-        "VUE_APP_PUSHER_APP_CLUSTER": "eu",
-        "VUE_APP_PUSHER_APP_AUTH_ENDPOINT": "https://rachok.herokuapp.com/broadcasting/auth"
-      }
-    },
-    "builds": [{ "src": "package.json", "use": "@now/static-build" }],
-    "routes": [
-        { "src": "^/js/(.*)", "dest": "/js/$1" },
-        { "src": "^/css/(.*)", "dest": "/css/$1" },
-        { "src": "^/img/(.*)", "dest": "/img/$1" },
-        { "src": ".*", "dest": "/index.html" }
-    ]
-  }
+  "name": "rachok",
+  "version": 2,
+  "build": {
+    "env": {
+      "VUE_APP_API_URL": "http://134.249.112.17:81/api/v1",
+      "VUE_APP_PUSHER_APP_KEY": "a77cba48e1dc963af103",
+      "VUE_APP_PUSHER_APP_CLUSTER": "eu",
+      "VUE_APP_PUSHER_APP_AUTH_ENDPOINT": "http://134.249.112.17:81/broadcasting/auth"
+    }
+  },
+  "builds": [{ "src": "package.json", "use": "@now/static-build" }],
+  "routes": [
+    { "src": "^/js/(.*)", "dest": "/js/$1" },
+    { "src": "^/css/(.*)", "dest": "/css/$1" },
+    { "src": "^/img/(.*)", "dest": "/img/$1" },
+    { "src": ".*", "dest": "/index.html" }
+  ]
+}
